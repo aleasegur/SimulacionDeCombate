@@ -19,10 +19,10 @@ public class Main {
         //condicion para entrar en el combate entre los dos jugadores
         boolean combate = true;
         //Random declarado como rand
-        Random rand = new Random(500);
+        Random rand = new Random();
         //Scanner declarado como sc
         Scanner sc = new Scanner(System.in);
-        realizarAtaque = rand.nextInt(500);
+        realizarAtaque = rand.nextInt(10);
 
         //Realizo un do while para comprobar que la suma de los atributos no supere 500
         do {
