@@ -1,6 +1,11 @@
 import java.util.Scanner;
 import java.util.Random;
 
+//ALEJANDRO ASENCIO GURAU
+/*IMPLEMENTACION FUTURA un nuevso atributo que se llame regenerar, dos nuevas variables que seria las acciones de cada turno tanto para el jugador 1
+* como para el jugador 2. Añadir un switch en el bucle principal dentro de los if donde la accion que es de tipo char el usuario elegiria A(atacar)
+* C(curar), en curacion si la vida es mayor a 200, debe ser igual a 200 y en caso que no seleccione ninguno pierde el turno el jugador seleccionado. Luego añdir un ataque critico en el booleano con un random.nextDouble()
+* si es menor a esCritico se multiplica por dos el daño */
 public class Main {
     public static void main(String[] args) {
         //las variables acabadas en 2 son para el jugador2
@@ -16,10 +21,14 @@ public class Main {
                 sumaAtributos2 = 0,
                 hit=0,//El daño del ataque
                 hitBase=0,//El daño base para atacar
+                hit2=0,
+                hitBase2=0,
                 //variable que cuenta las rondas;
                 rondas = 1;
-        //condicion para entrar en el combate entre los dos jugadores
-        boolean combate = true;
+        //Variables para multiplicar el daño en caso de critico(20%)
+        double esCritico=0.2,esCritico2=0.2;
+        //condicion para entrar en el combate entre los dos jugadores, y para detectar los ataques criticos
+        boolean combate = true,critico,critico2;
         //Random declarado como rand
         Random rand = new Random();
         //Scanner declarado como sc
@@ -51,7 +60,23 @@ public class Main {
             ataqueBase2 = sc.nextInt();
             sumaAtributos2 = velocidad2 + vida2 + defensaBase2 + ataqueBase2;
             //Cumple la condicion si supera 500 o los valores introducidos son menores a 1 o mayor a 200 PD: SE PUEDE REDUCIR CON UN METODO BOOLEAN
-        } while ((sumaAtributos > 500 && sumaAtributos2 > 500) && (velocidad<1 || velocidad>200 || ataqueBase<1 || ataqueBase>200 || vida<1 || vida>200 || defensaBase<1 ||  defensaBase>200 || velocidad2<1 || velocidad2>200 || vida2<1 || vida2>200 || ataqueBase2<1 || ataqueBase2>200 || defensaBase2<1 || defensaBase2>200));
+        } while ((sumaAtributos > 500 && sumaAtributos2 > 500) && (velocidad<1 || velocidad>200 || ataqueBase<1 || ataqueBase>200 ||
+                vida<1 || vida>200 || defensaBase<1 ||  defensaBase>200 || velocidad2<1 || velocidad2>200 || vida2<1 || vida2>200 ||
+                ataqueBase2<1 || ataqueBase2>200 || defensaBase2<1 || defensaBase2>200));
+
+        /* PLANTILLA DEFINIDA PARA LOS JUGADORES(REALIZAR PRUEBAS)
+        //Plantilla de jugador 1, para realizar pruebas
+        velocidad=150;
+        vida=150;
+        defensaBase=100;
+        ataqueBase=100;
+
+        //Plantilla del jugador2 para relizar pruebas
+        velocidad2=200;
+        vida2=100;
+        defensaBase2=150;
+        ataqueBase2=50;
+        */
 
         System.out.println("JUGADOR 1 " + "\nVelocidad " + velocidad + "\nVida " + vida + "\nDefensa " + defensaBase + "\nAtaque " + ataqueBase);
         System.out.println("\nJUGADOR 2 " + "\nVelocidad " + velocidad2 + "\nVida " + vida2 + "\nDefensa " + defensaBase2 + "\nAtaque " + ataqueBase2);
@@ -81,7 +106,7 @@ public class Main {
             if (velocidad >= velocidad2) {
                 //Ataque jugador 1 a jugador 2
                 hitBase=ataqueBase-defensaBase2/2;
-                hit=hitBase+rand.nextInt(10)-5;
+                hit=hitBase+rand.nextInt(10);
                 if (hit<0){
                     hit=0;
                 }
@@ -92,35 +117,35 @@ public class Main {
                 System.out.println("Jugador 1 golpea primero con "+hit+" de daño");
                 //Ataque jugador 2 a jugador 1
                 if (vida2>0){
-                    hitBase=ataqueBase2-defensaBase/2;
-                    hit=hitBase+rand.nextInt(10)-5;
-                    if (hit<0){
+                    hitBase2=ataqueBase2-defensaBase/2;
+                    hit2=hitBase2+rand.nextInt(10);
+                    if (hit2<0){
                         hit=0;
                     }
-                    vida-=hit;
+                    vida-=hit2;
                     if (vida<0){
                         vida=0;
                     }
-                    System.out.println("Jugador 2 golpea primero con "+hit+" de daño");
+                    System.out.println("Jugador 2 golpea primero con "+hit2+" de daño");
                 }
 
             } else {
                 //Ataque del segundo jugador al jugador 1
-                hitBase=ataqueBase2-defensaBase/2;
-                hit=hitBase+rand.nextInt(10)-5;
+                hitBase2=ataqueBase2-defensaBase/2;
+                hit2=hitBase2+rand.nextInt(10);
                 if (hit<0){
                     hit=0;
                 }
-                vida-=hit;
+                vida-=hit2;
                 if (vida<0){
                     vida=0;
                 }
-                System.out.println("Jugador 2 golpea primero con "+hit+" de daño");
+                System.out.println("Jugador 2 golpea primero con "+hit2+" de daño");
 
                 //Ataque del primer jugador al segundo
                 if (vida>1){
                     hitBase=ataqueBase-defensaBase2/2;
-                    hit=hitBase+rand.nextInt(10)-5;
+                    hit=hitBase+rand.nextInt(10);
                     if (hit<0){
                         hit=0;
                     }
