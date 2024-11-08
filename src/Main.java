@@ -2,9 +2,10 @@ import java.util.Scanner;
 import java.util.Random;
 
 //ALEJANDRO ASENCIO GURAU
-/*IMPLEMENTACION FUTURA un nuevso atributo que se llame regenerar, dos nuevas variables que seria las acciones de cada turno tanto para el jugador 1
+/*IMPLEMENTACION FUTURA un nuevo atributo que se llame regenerar, dos nuevas variables que seria las acciones de cada turno tanto para el jugador 1
 * como para el jugador 2. Añadir un switch en el bucle principal dentro de los if donde la accion que es de tipo char el usuario elegiria A(atacar)
-* C(curar), en curacion si la vida es mayor a 200, debe ser igual a 200 y en caso que no seleccione ninguno pierde el turno el jugador seleccionado. Luego añdir un ataque critico en el booleano con un random.nextDouble()
+* C(curar), en curacion si la vida es mayor a 200, debe ser igual a 200 y en caso que no seleccione ninguno pierde el turno el jugador seleccionado.
+* Luego añdir un ataque critico en el booleano con un random.nextDouble()
 * si es menor a esCritico se multiplica por dos el daño */
 public class Main {
     public static void main(String[] args) {
@@ -23,8 +24,11 @@ public class Main {
                 hitBase=0,//El daño base para atacar
                 hit2=0,
                 hitBase2=0,
+                regenerar,
+                regenerar2,
                 //variable que cuenta las rondas;
                 rondas = 1;
+        char accion1,accion2;
         //Variables para multiplicar el daño en caso de critico(20%)
         double esCritico=0.2,esCritico2=0.2;
         //condicion para entrar en el combate entre los dos jugadores, y para detectar los ataques criticos
@@ -33,11 +37,19 @@ public class Main {
         Random rand = new Random();
         //Scanner declarado como sc
         Scanner sc = new Scanner(System.in);
-
+        System.out.println("░▒▓███████▓▒░▒▓█▓▒░▒▓██████████████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░       ░▒▓██████▓▒░ ░▒▓██████▓▒░░▒▓█▓▒░░▒▓██████▓▒░░▒▓███████▓▒░       ░▒▓███████▓▒░░▒▓████████▓▒░       ░▒▓██████▓▒░ ░▒▓██████▓▒░░▒▓██████████████▓▒░░▒▓███████▓▒░ ░▒▓██████▓▒░▒▓████████▓▒░▒▓████████▓▒░ \n" +
+                "░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░             ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░   ░▒▓█▓▒░        \n" +
+                "░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░             ░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░   ░▒▓█▓▒░        \n" +
+                " ░▒▓██████▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓████████▓▒░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓██████▓▒░        ░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░░▒▓████████▓▒░ ░▒▓█▓▒░   ░▒▓██████▓▒░   \n" +
+                "       ░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░             ░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░   ░▒▓█▓▒░        \n" +
+                "       ░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░             ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░   ░▒▓█▓▒░        \n" +
+                "░▒▓███████▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░░▒▓████████▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░░▒▓█▓▒░░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░      ░▒▓███████▓▒░░▒▓████████▓▒░       ░▒▓██████▓▒░ ░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░   ░▒▓████████▓▒░ \n" +
+                "                                                                                                                                                                                                                                                                      \n" +
+                "                                                                                                                                                                                                                                                                      ");
         //Realizo un do while para comprobar que la suma de los atributos no supere 500
         do {
             System.out.println("JUGADOR 1");
-            System.out.println("Introduce los valores para velocidad,vida,defensa,ataque(La suma de los atributos no debe ser mayor a 500): " + "\nCada uno de los atributos debe ser entre 1-200");
+            System.out.println("Introduce los valores para velocidad,vida,defensa,ataque(La suma de los atributos no debe ser mayor a 500): " + "\nCada uno de los atributos debe ser entre (1-200) ");
             System.out.println("Velocidad: ");
             velocidad = sc.nextInt();
             System.out.println("Vida: ");
@@ -46,7 +58,9 @@ public class Main {
             defensaBase = sc.nextInt();
             System.out.println("Ataque: ");
             ataqueBase = sc.nextInt();
-            sumaAtributos = velocidad + vida + defensaBase + ataqueBase;
+            System.out.println("Regenerar: ");
+            regenerar=sc.nextInt();
+            sumaAtributos = velocidad + vida + defensaBase + ataqueBase+regenerar;
 
             System.out.println("JUGADOR 2 ");
             System.out.println("Introduce los valores para velocidad,vida,defensa,ataque(La suma de los atributos no debe ser mayor a 500): ");
@@ -58,29 +72,35 @@ public class Main {
             defensaBase2 = sc.nextInt();
             System.out.println("Ataque: ");
             ataqueBase2 = sc.nextInt();
-            sumaAtributos2 = velocidad2 + vida2 + defensaBase2 + ataqueBase2;
+            System.out.println("Regenerar: ");
+            regenerar2=sc.nextInt();
+            sumaAtributos2 = velocidad2 + vida2 + defensaBase2 + ataqueBase2+regenerar2;
             //Cumple la condicion si supera 500 o los valores introducidos son menores a 1 o mayor a 200 PD: SE PUEDE REDUCIR CON UN METODO BOOLEAN
-        } while ((sumaAtributos > 500 && sumaAtributos2 > 500) && (velocidad<1 || velocidad>200 || ataqueBase<1 || ataqueBase>200 ||
-                vida<1 || vida>200 || defensaBase<1 ||  defensaBase>200 || velocidad2<1 || velocidad2>200 || vida2<1 || vida2>200 ||
-                ataqueBase2<1 || ataqueBase2>200 || defensaBase2<1 || defensaBase2>200));
-
-        /* PLANTILLA DEFINIDA PARA LOS JUGADORES(REALIZAR PRUEBAS)
+        } while ((sumaAtributos > 500 && sumaAtributos2 > 500) && (velocidad<1 || velocidad>200
+                || ataqueBase<1 || ataqueBase>200 ||
+                vida<1 || vida>200 || defensaBase<1 ||  defensaBase>200 ||
+                velocidad2<1 || velocidad2>200 || vida2<1 || vida2>200 ||
+                ataqueBase2<1 || ataqueBase2>200 || defensaBase2<1 || defensaBase2>200 ||
+                regenerar<1 || regenerar>200 || regenerar2<1 || regenerar2>200));
+        /*
+        //PLANTILLA DEFINIDA PARA LOS JUGADORES(REALIZAR PRUEBAS)
         //Plantilla de jugador 1, para realizar pruebas
         velocidad=150;
-        vida=150;
+        vida=100;
         defensaBase=100;
         ataqueBase=100;
+        regenerar=50;
 
         //Plantilla del jugador2 para relizar pruebas
-        velocidad2=200;
+        velocidad2=100;
         vida2=100;
         defensaBase2=150;
         ataqueBase2=50;
+        regenerar2=50;
         */
 
-        System.out.println("JUGADOR 1 " + "\nVelocidad " + velocidad + "\nVida " + vida + "\nDefensa " + defensaBase + "\nAtaque " + ataqueBase);
-        System.out.println("\nJUGADOR 2 " + "\nVelocidad " + velocidad2 + "\nVida " + vida2 + "\nDefensa " + defensaBase2 + "\nAtaque " + ataqueBase2);
-
+        System.out.println("JUGADOR 1 " + "\nVelocidad " + velocidad + "\nVida " + vida + "\nDefensa " + defensaBase + "\nAtaque " + ataqueBase+"\nRegenerar "+regenerar);
+        System.out.println("\nJUGADOR 2 " + "\nVelocidad " + velocidad2 + "\nVida " + vida2 + "\nDefensa " + defensaBase2 + "\nAtaque " + ataqueBase2+"\nRegenerar "+regenerar);
 
         while (combate) {
             //ESTO SE PODRIA REDUCIR CON UN METODO String
@@ -104,80 +124,111 @@ public class Main {
 
             //determinar quien ataca primero PD: SE PUEDE REDUCIR CON UN METODO INT
             if (velocidad >= velocidad2) {
+                System.out.println("Jugador 1.Introduce un caracter A(Atacar), C(Curar) y cualquier caracter diferente pierde la ronda para continuar: ");
+                accion1=sc.next().toUpperCase().charAt(0);
                 //Ataque jugador 1 a jugador 2
-                hitBase=ataqueBase-defensaBase2/2;
-                hit=hitBase+rand.nextInt(10);
-                if (hit<0){
-                    hit=0;
-                }
-                vida2-=hit;
-                if (vida2<=0){
-                    vida2=0;
-                }
-                System.out.println("Jugador 1 golpea primero con "+hit+" de daño");
-                //Ataque jugador 2 a jugador 1
-                if (vida2>0){
-                    hitBase2=ataqueBase2-defensaBase/2;
-                    hit2=hitBase2+rand.nextInt(10);
-                    if (hit2<0){
-                        hit=0;
-                    }
-                    vida-=hit2;
-                    if (vida<0){
-                        vida=0;
-                    }
-                    System.out.println("Jugador 2 golpea primero con "+hit2+" de daño");
+                switch (accion1){
+                    case 'A':
+                        hitBase=ataqueBase-defensaBase2/2;
+                        hit=hitBase+rand.nextInt(10);
+                        if (hit<0){
+                            hit=0;
+                        }
+                        vida2-=hit;
+                        if (vida2<=0){
+                            vida2=0;
+                        }
+                        System.out.println("Jugador 1 golpea primero con "+hit+" de daño");
+                        //Ataque jugador 2 a jugador 1
+                        if (vida2>0){
+                            hitBase2=ataqueBase2-defensaBase/2;
+                            hit2=hitBase2+rand.nextInt(10);
+                            if (hit2<0){
+                                hit2=0;
+                            }
+                            vida-=hit2;
+                            if (vida<0){
+                                vida=0;
+                            }
+                            System.out.println("Jugador 2 golpea primero con "+hit2+" de daño");
+                        }
+                        break;
+                    case 'C':
+                        vida+=regenerar;
+                        if (vida>200){
+                            vida=200;
+                        }
+                        break;
+                    default:
+                        System.out.println("Caracter no valido, turno no valido");
                 }
 
             } else {
-                //Ataque del segundo jugador al jugador 1
-                hitBase2=ataqueBase2-defensaBase/2;
-                hit2=hitBase2+rand.nextInt(10);
-                if (hit<0){
-                    hit=0;
-                }
-                vida-=hit2;
-                if (vida<0){
-                    vida=0;
-                }
-                System.out.println("Jugador 2 golpea primero con "+hit2+" de daño");
-
-                //Ataque del primer jugador al segundo
-                if (vida>1){
-                    hitBase=ataqueBase-defensaBase2/2;
-                    hit=hitBase+rand.nextInt(10);
-                    if (hit<0){
-                        hit=0;
-                    }
-                    vida2-=hit;
-                    if (vida2<0){
-                        vida2=0;
-                    }
-                    System.out.println("Jugador 1 golpea primero con "+hit+" de daño");
+                System.out.println("Jugador 2.Introduce un caracter A(Atacar), C(Curar) y cualquier caracter diferente pierde la ronda para continuar: ");
+                accion2=sc.next().toUpperCase().charAt(0);
+                switch (accion2){
+                    case 'A':
+                        //Ataque del segundo jugador al jugador 1
+                        hitBase2=ataqueBase2-defensaBase/2;
+                        hit2=hitBase2+rand.nextInt(10);
+                        if (hit<0){
+                            hit=0;
+                        }
+                        vida-=hit2;
+                        if (vida<0){
+                            vida=0;
+                        }
+                        System.out.println("Jugador 2 golpea primero con "+hit2+" de daño");
+                        //Ataque del primer jugador al segundo
+                        if (vida>1){
+                            hitBase=ataqueBase-defensaBase2/2;
+                            hit=hitBase+rand.nextInt(10);
+                            if (hit<0){
+                                hit=0;
+                            }
+                            vida2-=hit;
+                            if (vida2<0){
+                                vida2=0;
+                            }
+                            System.out.println("Jugador 1 golpea primero con "+hit+" de daño");
+                        }
+                        break;
+                    case 'C':
+                        vida2+=regenerar2;
+                        if (vida2>200){
+                            vida2=200;
+                        }
+                        break;
+                    default:
+                        System.err.println("Caracter no valido, turno perdido");
                 }
             }
             if (vida <= 0 || vida2 <= 0) {
                 combate = false;
             }
             rondas++;
-            System.out.println("Introduce cualquier caracter para continuar: " );
-            sc.next().charAt(0);
 
         }
         if (vida2 <= 0) {
-            System.out.println(" _   _             _____                       _           ___ _   _ _____  ___ ______ ___________   __  _ \n" +
-                    "| | | |           |  __ \\                     | |         |_  | | | |  __ \\/ _ \\|  _  |  _  | ___ \\ /  || |\n" +
-                    "| |_| | __ _ ___  | |  \\/ __ _ _ __   __ _  __| | ___       | | | | | |  \\/ /_\\ | | | | | | | |_/ / `| || |\n" +
-                    "|  _  |/ _` / __| | | __ / _` | '_ \\ / _` |/ _` |/ _ \\      | | | | | | __|  _  | | | | | | |    /   | || |\n" +
-                    "| | | | (_| \\__ \\ | |_\\ | (_| | | | | (_| | (_| | (_) | /\\__/ | |_| | |_\\ | | | | |/ /\\ \\_/ | |\\ \\  _| ||_|\n" +
-                    "\\_| |_/\\__,_|___/  \\____/\\__,_|_| |_|\\__,_|\\__,_|\\___/  \\____/ \\___/ \\____\\_| |_|___/  \\___/\\_| \\_| \\___(_)");
+            System.out.println("  ______    ______   __    __   ______   _______    ______   _______            _____  __    __   ______    ______   _______    ______   _______     __   \n" +
+                    " /      \\  /      \\ /  \\  /  | /      \\ /       \\  /      \\ /       \\          /     |/  |  /  | /      \\  /      \\ /       \\  /      \\ /       \\  _/  |  \n" +
+                    "/$$$$$$  |/$$$$$$  |$$  \\ $$ |/$$$$$$  |$$$$$$$  |/$$$$$$  |$$$$$$$  |         $$$$$ |$$ |  $$ |/$$$$$$  |/$$$$$$  |$$$$$$$  |/$$$$$$  |$$$$$$$  |/ $$ |  \n" +
+                    "$$ | _$$/ $$ |__$$ |$$$  \\$$ |$$ |__$$ |$$ |  $$ |$$ |  $$ |$$ |__$$ |            $$ |$$ |  $$ |$$ | _$$/ $$ |__$$ |$$ |  $$ |$$ |  $$ |$$ |__$$ |$$$$ |  \n" +
+                    "$$ |/    |$$    $$ |$$$$  $$ |$$    $$ |$$ |  $$ |$$ |  $$ |$$    $$<        __   $$ |$$ |  $$ |$$ |/    |$$    $$ |$$ |  $$ |$$ |  $$ |$$    $$<   $$ |  \n" +
+                    "$$ |$$$$ |$$$$$$$$ |$$ $$ $$ |$$$$$$$$ |$$ |  $$ |$$ |  $$ |$$$$$$$  |      /  |  $$ |$$ |  $$ |$$ |$$$$ |$$$$$$$$ |$$ |  $$ |$$ |  $$ |$$$$$$$  |  $$ |  \n" +
+                    "$$ \\__$$ |$$ |  $$ |$$ |$$$$ |$$ |  $$ |$$ |__$$ |$$ \\__$$ |$$ |  $$ |      $$ \\__$$ |$$ \\__$$ |$$ \\__$$ |$$ |  $$ |$$ |__$$ |$$ \\__$$ |$$ |  $$ | _$$ |_ \n" +
+                    "$$    $$/ $$ |  $$ |$$ | $$$ |$$ |  $$ |$$    $$/ $$    $$/ $$ |  $$ |      $$    $$/ $$    $$/ $$    $$/ $$ |  $$ |$$    $$/ $$    $$/ $$ |  $$ |/ $$   |\n" +
+                    " $$$$$$/  $$/   $$/ $$/   $$/ $$/   $$/ $$$$$$$/   $$$$$$/  $$/   $$/        $$$$$$/   $$$$$$/   $$$$$$/  $$/   $$/ $$$$$$$/   $$$$$$/  $$/   $$/ $$$$$$/");
         } else {
-            System.out.println(" _   _             _____                       _           ___ _   _ _____  ___ ______ ___________   _____ _ \n" +
-                    "| | | |           |  __ \\                     | |         |_  | | | |  __ \\/ _ \\|  _  |  _  | ___ \\ / __  | |\n" +
-                    "| |_| | __ _ ___  | |  \\/ __ _ _ __   __ _  __| | ___       | | | | | |  \\/ /_\\ | | | | | | | |_/ / `' / /| |\n" +
-                    "|  _  |/ _` / __| | | __ / _` | '_ \\ / _` |/ _` |/ _ \\      | | | | | | __|  _  | | | | | | |    /    / / | |\n" +
-                    "| | | | (_| \\__ \\ | |_\\ | (_| | | | | (_| | (_| | (_) | /\\__/ | |_| | |_\\ | | | | |/ /\\ \\_/ | |\\ \\  ./ /__|_|\n" +
-                    "\\_| |_/\\__,_|___/  \\____/\\__,_|_| |_|\\__,_|\\__,_|\\___/  \\____/ \\___/ \\____\\_| |_|___/  \\___/\\_| \\_| \\_____(_)");
+            System.out.println("  ______    ______   __    __   ______   _______    ______   _______            _____  __    __   ______    ______   _______    ______   _______    ______  \n" +
+                    " /      \\  /      \\ /  \\  /  | /      \\ /       \\  /      \\ /       \\          /     |/  |  /  | /      \\  /      \\ /       \\  /      \\ /       \\  /      \\ \n" +
+                    "/$$$$$$  |/$$$$$$  |$$  \\ $$ |/$$$$$$  |$$$$$$$  |/$$$$$$  |$$$$$$$  |         $$$$$ |$$ |  $$ |/$$$$$$  |/$$$$$$  |$$$$$$$  |/$$$$$$  |$$$$$$$  |/$$$$$$  |\n" +
+                    "$$ | _$$/ $$ |__$$ |$$$  \\$$ |$$ |__$$ |$$ |  $$ |$$ |  $$ |$$ |__$$ |            $$ |$$ |  $$ |$$ | _$$/ $$ |__$$ |$$ |  $$ |$$ |  $$ |$$ |__$$ |$$____$$ |\n" +
+                    "$$ |/    |$$    $$ |$$$$  $$ |$$    $$ |$$ |  $$ |$$ |  $$ |$$    $$<        __   $$ |$$ |  $$ |$$ |/    |$$    $$ |$$ |  $$ |$$ |  $$ |$$    $$<  /    $$/ \n" +
+                    "$$ |$$$$ |$$$$$$$$ |$$ $$ $$ |$$$$$$$$ |$$ |  $$ |$$ |  $$ |$$$$$$$  |      /  |  $$ |$$ |  $$ |$$ |$$$$ |$$$$$$$$ |$$ |  $$ |$$ |  $$ |$$$$$$$  |/$$$$$$/  \n" +
+                    "$$ \\__$$ |$$ |  $$ |$$ |$$$$ |$$ |  $$ |$$ |__$$ |$$ \\__$$ |$$ |  $$ |      $$ \\__$$ |$$ \\__$$ |$$ \\__$$ |$$ |  $$ |$$ |__$$ |$$ \\__$$ |$$ |  $$ |$$ |_____ \n" +
+                    "$$    $$/ $$ |  $$ |$$ | $$$ |$$ |  $$ |$$    $$/ $$    $$/ $$ |  $$ |      $$    $$/ $$    $$/ $$    $$/ $$ |  $$ |$$    $$/ $$    $$/ $$ |  $$ |$$       |\n" +
+                    " $$$$$$/  $$/   $$/ $$/   $$/ $$/   $$/ $$$$$$$/   $$$$$$/  $$/   $$/        $$$$$$/   $$$$$$/   $$$$$$/  $$/   $$/ $$$$$$$/   $$$$$$/  $$/   $$/ $$$$$$$$/");
         }
         sc.close();
     }
