@@ -72,7 +72,7 @@ public class Main {
                 "NO HAY TIEMPO PARA LA PAZ. NO HAY RESPIRO NI PERDÓN \n" +
                 "\n" +
                 "EN LA SOMBRÍA OSCURIDAD DEL FUTURO LEJANO, SÓLO HAY GUERRA ");
-        System.out.println("Deseas crear los dos personajes con sus facciones, clases y atributos(TRUE) o prefiere utilizar personajes ya creados(FALSE): ");
+        System.out.println("Deseas crear los personajes con sus facciones, clases y atributos(TRUE) o prefiere utilizar personajes ya creados(FALSE): ");
         crearPj=sc.nextBoolean();
         if (crearPj==true) {
             //Realizo un do while para comprobar que la suma de los atributos no supere 500
@@ -96,7 +96,7 @@ public class Main {
                                 "A los xenos no se les daba este cuartel, y la ira de la Legión se manifestaba como una marea de carnicería implacable que solo amainaba tras lograr el exterminio absoluto.");
                         break;
                     case 3:
-                        faccion1="Ultrmarines";
+                        faccion1="Ultramarines";
                         System.out.println("Los Ultramarines fueron la XIII Legión de Marines Espaciales creada por el Emperador para su Gran Cruzada. Su Primarca era Roboute Guilliman. La Legión se mantuvo en el bando leal durante la Herejía de Horus, y tras esta, se reorganizó según el Codex Astartes y se dividió en Capítulos.\n" +
                                 "\n" +
                                 "Desde los antiguos días de la Gran Cruzada, los Ultramarines han combatido en la vanguardia de los ejércitos del Emperador. Son guerreros altamente disciplinados y " +
