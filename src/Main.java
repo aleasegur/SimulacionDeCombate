@@ -1,5 +1,5 @@
-import java.util.Scanner;
 import java.util.Random;
+import java.util.Scanner;
 
 //ALEJANDRO ASENCIO GURAU
 /*IMPLEMENTACION FUTURA un nuevo atributo que se llame regenerar, dos nuevas variables que seria las acciones de cada turno tanto para el jugador 1
@@ -9,6 +9,12 @@ import java.util.Random;
 * si es menor a esCritico se multiplica por dos el daño */
 public class Main {
     public static void main(String[] args) {
+        //Random declarado como rand
+        Random rand = new Random();
+        //Scanner declarado como sc
+        Scanner sc = new Scanner(System.in);
+        //Variable final que pone un limite de daño
+        final int limiteDamage=15;
         //las variables acabadas en 2 son para el jugador2
         int velocidad=0,
                 velocidad2=0,
@@ -18,32 +24,38 @@ public class Main {
                 defensaBase2=0,
                 vida=0,
                 vida2=0,
-                sumaAtributos = 0,
-                sumaAtributos2 = 0,
+                sumaAtributos,
+                sumaAtributos2,
                 hit=0,//El daño del ataque
-                hitBase=0,//El daño base para atacar
-                hit2=0,
-                hitBase2=0,
+                hitBase,//El daño base para atacar
+                hit2,
+                hitBase2,
                 regenerar=0,
-                regenerar2=0,
+                regenerar2,
                 //variable que cuenta las rondas;
-                rondas = 1,
-                opcionFaccion1,
+                rondas = 1;
+        //opciones para que el usurio introduzca
+        int opcionFaccion1,
                 opcionFaccion2,
                 opcionClase1,
                 opcionClase2,
                 opcionJug1,
                 opcionJug2;
-        char accion1,accion2;
-        String faccion1="", faccion2="",clase1="",clase2="";
+        //acciones para que el usurio introduzca
+        char accion1,
+                accion2;
+
+        //cadenas de texto en el que pone nombre a los jugadores
+        String faccion1 = "",
+                faccion2 = "",
+                clase1 = "",
+                clase2 = "";
         //Variables para multiplicar el daño en caso de critico(20%)
-        double esCritico=0.2,esCritico2=0.2;
-        //condicion para entrar en el combate entre los dos jugadores, y para detectar los ataques criticos
-        boolean combate = true,critico,critico2,crearPj;
-        //Random declarado como rand
-        Random rand = new Random();
-        //Scanner declarado como sc
-        Scanner sc = new Scanner(System.in);
+        int esCritico = rand.nextInt(100),
+                esCritico2 = rand.nextInt(100),
+                probabilidadCritico = 20;
+        //condicion para entrar en el combate entre los dos jugadores, y si quiere crear al personaje o no
+        boolean combate = true, crearPj;
 
         System.out.println("%*+***************+++***********++***********+++++++*++*******#%********   ********#*************+++++*+********++++++*+*+**+**+++++*****+*++++++* \n" +
                 "  *################%%######%###%%##%%%%##%%%%%################## **#*####*####*#**#####%%%##############%####%%%%#%%####################**#**#***  \n" +
@@ -92,7 +104,6 @@ public class Main {
                     case 2:
                         faccion1="ANGELES SANGRIENTOS";
                         System.out.println("Los Ángeles Sangrientos fueron la IX Legión de Marines Espaciales que el Emperador creó para su Gran Cruzada. Su Primarca era Sanguinius, y su mundo natal es Baal.\n" +
-                                "\n" +
                                 "En combate, la Legión de los Ángeles Sangrientos era la encarnación de la ira del Emperador hacia aquellos que rechazaban el regalo de la Unidad. Liderados por su angelical Primarca Sanguinius, " +
                                 "su venida no era nada menos que un juicio apocalíptico descargado sobre los culpables desde las alturas, y descendiendo de los cielos sobre alas de fuego, la Legión conquistó mundos humanos perdidos tanto por su furia sobrenatural como por el terror y el pasmo que engendraba. " +
                                 "Naciones enteras cayeron de rodillas, acobardadas por la furia y el esplendor de estos \"ángeles rojos\", por temor a perecer bajo las brillantes espadas de los Marines Espaciales. " +
@@ -101,14 +112,15 @@ public class Main {
                     case 3:
                         faccion1="Ultramarines";
                         System.out.println("Los Ultramarines fueron la XIII Legión de Marines Espaciales creada por el Emperador para su Gran Cruzada. Su Primarca era Roboute Guilliman. La Legión se mantuvo en el bando leal durante la Herejía de Horus, y tras esta, se reorganizó según el Codex Astartes y se dividió en Capítulos.\n" +
-                                "\n" +
                                 "Desde los antiguos días de la Gran Cruzada, los Ultramarines han combatido en la vanguardia de los ejércitos del Emperador. Son guerreros altamente disciplinados y " +
                                 "valientes que han permanecido fieles durante diez mil años a las enseñanzas del sagrado Codex Astartes, la mayor obra de su Primarca." +
                                 " Sus victorias se relatan desde su mundo natal, Macragge, hasta en las cámaras sagradas de Terra. " +
                                 "Donde los enemigos de la Humanidad amenacen al Imperio, allí estarán los Ultramarines para combatirlos.");
                         break;
                 }
-
+                /*cada clase cierta habilidad  especial que en combate puede por ejemplo estratega previene el ataque del enemigo, asalto golpea dos veces,
+                vanguardia bloquea el ataque del enemigo, bastion reduce el atque del enemigo pero da 1 golpe por 3,
+                francontirador se vuelve invisible y de lo pueden atacar y pesado refuerza la defensa pero puede matar de un golpe */
                 System.out.println(faccion1+"\nELIGE UNA CLASE "+"\n1.Estratega"+"\n2.Asalto"+"\n3.Vanguardia"+"\n4.Bastion"+"\n5.Francotirador"+"\n6.Pesado");
                 opcionClase1=sc.nextInt();
                 switch (opcionClase1){
@@ -338,86 +350,105 @@ public class Main {
 
             System.out.println("\n**********************************************");
             System.out.println("RONDA " + rondas);
-            System.out.println(faccion1 +"CLASE: "+clase1+ " " + vida + " " + barra);
-            System.out.println(faccion2 +"CLASE: "+clase2+ " " + vida2 + " " + barra2);
+            System.out.println(faccion1 + " CLASE: "+ clase1+ " VIDA: " + vida + " " + barra);
+            System.out.println(faccion2 + " CLASE: "+ clase2+ " VIDA: " + vida2 + " " + barra2);
 
 
             //determinar quien ataca primero PD: SE PUEDE REDUCIR CON UN METODO INT
             if (velocidad >= velocidad2) {
-                System.out.println(faccion1+" .Introduce un caracter A(Atacar), C(Curar) y cualquier caracter diferente pierde la ronda para continuar: ");
+                System.out.println(faccion1 + " Realiza una accion: "+"\nA.Atacar" + "\nC.Curar: ");
                 accion1=sc.next().toUpperCase().charAt(0);
                 //Ataque jugador 1 a jugador 2
                 switch (accion1){
                     case 'A':
-                        hitBase=ataqueBase-defensaBase2/2;
-                        hit=hitBase+rand.nextInt(10);
-                        if (hit<0){
-                            hit=0;
+                        if (defensaBase2 > ataqueBase) {
+                            hitBase = defensaBase2 - ataqueBase;  // La defensa bloquea el daño, incluso "inflige" daño negativo
+                        } else {
+                            hitBase = ataqueBase - defensaBase2 / 2;  // Caso estándar, el ataque es mayor que la defensa
                         }
-                        vida2-=hit;
-                        if (vida2<=0){
-                            vida2=0;
+                        hit = Math.max(0, hitBase + rand.nextInt(10));
+                        // Verificar si es un ataque crítico
+                        if (esCritico < probabilidadCritico) {
+                            hit = (int) (hit * 1.5); // Aplica el multiplicador de daño crítico
+                            System.out.println(faccion1 + " realiza un ataque CRÍTICO!");
                         }
+                        hit=Math.min(hit,limiteDamage);//Utilizo Math.min para que tenga un rango de atque aceptable
+                        vida2 -= hit;
+                        vida2 = Math.max(0, vida2); // Evitar que vida2 sea negativa
                         System.out.println(faccion1+" golpea primero con "+hit+" de daño");
                         //Ataque jugador 2 a jugador 1
                         if (vida2>0){
-                            hitBase2=ataqueBase2-defensaBase/2;
-                            hit2=hitBase2+rand.nextInt(10);
-                            if (hit2<0){
-                                hit2=0;
+                            if (defensaBase > ataqueBase2) {
+                                hitBase2 = defensaBase - ataqueBase2;  // La defensa bloquea el daño, incluso "inflige" daño negativo
+                            } else {
+                                hitBase2 = ataqueBase2 - defensaBase / 2;  // Caso estándar, el ataque es mayor que la defensa
                             }
-                            vida-=hit2;
-                            if (vida<0){
-                                vida=0;
+                            hit2 = Math.max(0, hitBase2 + rand.nextInt(10));
+
+                            if (esCritico2 < probabilidadCritico) {
+                                hit2 = (int) (hit2 * 1.5);
+                                System.out.println(faccion2 + " realiza un ataque CRÍTICO!");
                             }
+                            hit2=Math.min(hit2,limiteDamage);
+                            vida -= hit2;
+                            vida = Math.max(0, vida);
                             System.out.println(faccion2+" golpea primero con "+hit2+" de daño");
                         }
                         break;
                     case 'C':
-                        vida+=regenerar;
-                        if (vida>200){
-                            vida=200;
-                        }
+                        vida += regenerar;
+                        vida = Math.min(vida, 200); // Evitar que vida supere 200
+                        System.out.println(faccion1 + " se cura, + " + vida);
                         break;
                     default:
                         System.out.println("Caracter no valido, turno no valido");
                 }
 
             } else {
-                System.out.println(faccion2+".Introduce un caracter A(Atacar), C(Curar) y cualquier caracter diferente pierde la ronda para continuar: ");
+                System.out.println(faccion2 + " Realiza una accion: " + "\nA.Atacar" + "\nC.Curar: ");
                 accion2=sc.next().toUpperCase().charAt(0);
                 switch (accion2){
                     case 'A':
                         //Ataque del segundo jugador al jugador 1
-                        hitBase2=ataqueBase2-defensaBase/2;
-                        hit2=hitBase2+rand.nextInt(10);
-                        if (hit<0){
-                            hit=0;
+                        if (defensaBase > ataqueBase2) {
+                            hitBase2 = defensaBase - ataqueBase2;  // La defensa bloquea el daño, incluso "inflige" daño negativo
+                        } else {
+                            hitBase2 = ataqueBase2 - defensaBase / 2;  // Caso estándar, el ataque es mayor que la defensa
                         }
-                        vida-=hit2;
-                        if (vida<0){
-                            vida=0;
+                        hit2 = Math.max(0, hitBase2 + rand.nextInt(10));
+
+                        if (esCritico2 < probabilidadCritico) {
+                            hit2 = (int) (hit2 * 1.5);
+                            System.out.println(faccion2 + " realiza un ataque CRÍTICO!");
                         }
+                        hit2=Math.min(hit2,limiteDamage);
+                        vida -= hit2;
+                        vida = Math.max(0, vida);
                         System.out.println(faccion2+" golpea primero con "+hit2+" de daño");
+
                         //Ataque del primer jugador al segundo
-                        if (vida>1){
-                            hitBase=ataqueBase-defensaBase2/2;
-                            hit=hitBase+rand.nextInt(10);
-                            if (hit<0){
-                                hit=0;
+                        if (vida>0){
+                            if (defensaBase2 > ataqueBase) {
+                                hitBase = defensaBase2 - ataqueBase;  // La defensa bloquea el daño, incluso "inflige" daño negativo
+                            } else {
+                                hitBase = ataqueBase - defensaBase2 / 2;  // Caso estándar, el ataque es mayor que la defensa
                             }
-                            vida2-=hit;
-                            if (vida2<0){
-                                vida2=0;
-                            }
-                            System.out.println(faccion1+" golpea primero con "+hit+" de daño");
+                        hit = Math.max(0, hitBase + rand.nextInt(10));
+                        // Verificar si es un ataque crítico
+                        if (esCritico < probabilidadCritico) {
+                            hit = (int) (hit * 1.5); // Aplica el multiplicador de daño crítico
+                            System.out.println(faccion1 + " realiza un ataque CRÍTICO!");
+                        }
+                        hit=Math.min(hit,limiteDamage);
+                        vida2 -= hit;
+                        vida2 = Math.max(0, vida2); // Evitar que vida2 sea negativa
+                        System.out.println(faccion1+" golpea primero con "+hit+" de daño");
                         }
                         break;
                     case 'C':
-                        vida2+=regenerar2;
-                        if (vida2>200){
-                            vida2=200;
-                        }
+                        vida2 += regenerar;
+                        vida2 = Math.min(vida2, 200); // Evitar que vida supere 200
+                        System.out.println(faccion2 + " se cura, + " + vida2);
                         break;
                     default:
                         System.err.println("Caracter no valido, turno perdido");
@@ -430,6 +461,7 @@ public class Main {
 
         }
         if (vida2 <= 0) {
+            System.out.println(faccion1+" ¡VICTORIA!");
             System.out.println("______ ___________   _____ _       ________  _________ ___________  ___ ______ ___________ \n" +
                     "| ___ \\  _  | ___ \\ |  ___| |     |  ___|  \\/  || ___ \\  ___| ___ \\/ _ \\|  _  \\  _  | ___ \\\n" +
                     "| |_/ / | | | |_/ / | |__ | |     | |__ | .  . || |_/ / |__ | |_/ / /_\\ \\ | | | | | | |_/ /\n" +
@@ -437,6 +469,7 @@ public class Main {
                     "| |   \\ \\_/ / |\\ \\  | |___| |____ | |___| |  | || |   | |___| |\\ \\| | | | |/ /\\ \\_/ / |\\ \\ \n" +
                     "\\_|    \\___/\\_| \\_| \\____/\\_____/ \\____/\\_|  |_/\\_|   \\____/\\_| \\_\\_| |_/___/  \\___/\\_| \\_");
         } else {
+            System.out.println(faccion2+ "¡VICTORIA!");
             System.out.println("___  ____   _ ___________ _____ _____    ___   _      ______ ___   _      _____  _____   ________  _________ ___________  ___ ______ ___________ \n" +
                     "|  \\/  | | | |  ___| ___ \\_   _|  ___|  / _ \\ | |     |  ___/ _ \\ | |    /  ___||  _  | |  ___|  \\/  || ___ \\  ___| ___ \\/ _ \\|  _  \\  _  | ___ \\\n" +
                     "| .  . | | | | |__ | |_/ / | | | |__   / /_\\ \\| |     | |_ / /_\\ \\| |    \\ `--. | | | | | |__ | .  . || |_/ / |__ | |_/ / /_\\ \\ | | | | | | |_/ /\n" +
