@@ -10,28 +10,30 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
         //las variables acabadas en 2 son para el jugador2
-        int velocidad,
-                velocidad2,
-                ataqueBase,
-                ataqueBase2,
-                defensaBase,
-                defensaBase2,
-                vida,
-                vida2,
+        int velocidad=0,
+                velocidad2=0,
+                ataqueBase=0,
+                ataqueBase2=0,
+                defensaBase=0,
+                defensaBase2=0,
+                vida=0,
+                vida2=0,
                 sumaAtributos = 0,
                 sumaAtributos2 = 0,
                 hit=0,//El daño del ataque
                 hitBase=0,//El daño base para atacar
                 hit2=0,
                 hitBase2=0,
-                regenerar,
-                regenerar2,
+                regenerar=0,
+                regenerar2=0,
                 //variable que cuenta las rondas;
                 rondas = 1,
                 opcionFaccion1,
                 opcionFaccion2,
                 opcionClase1,
-                opcionClase2;
+                opcionClase2,
+                opcionJug1,
+                opcionJug2;
         char accion1,accion2;
         String faccion1="", faccion2="",clase1="",clase2="";
         //Variables para multiplicar el daño en caso de critico(20%)
@@ -61,23 +63,24 @@ public class Main {
                 "                      #******************************##%%%%%@@%%@%@@%%%%%@%%@%%@%%@%%@%%@%%%##******************************#                      \n" +
                 "                                                      #*************************************#");
 
-        System.out.println("EN EL CUADRAGÉSIMO PRIMER MILENIO, LA HUMANIDAD SE ENCUENTRA AL BORDE DE LA ANIQUILACION. \n" +
-                "\n" +
-                "EL IMPERIO DE LA HUMANIDAD SE EXTIENDE A LO LARGO DE LA GALAXIA Y ESTÁ BAJO LA AMENAZA DE ALIENÍGENAS HOSTILES EN SUS FRONTERAS Y TRAIDORES Y HEREJES EN SU INTERIOR. \n" +
-                "\n" +
-                "SE TRATA DE UNA ERA DE GUERRA CONSTANTE, UNA NUEVA ERA OSCURA EN LA CUAL LA ILUMINACION SE VE SUSTITUIDA POR LAS SUPERSTICIONES, LA RETÓRICA Y LOS REZOS CIEGOS. VIVIR EN ESTOS TIEMPOS SUPONE SER UNO ENTRE INCONTABLES MILES DE BILLONES QUE EXISTEN EN EL RÉGIMEN MÁS CRUEL Y SANGUINARIO JAMÁS IMAGINABLE. \n" +
-                "\n" +
-                "LOS MÁS PODEROSOS Y TEMIBLES DEFENSORES DEL IMPERIO SON LOS MARINES ESPACIALES: GUERREROS SOBREHUMANOS CREADOS MEDIANTE BIOINGENIERIA, SON EL ÚLTIMO BASTIÓN DE LA HUMANIDAD ANTE EL HORROR. \n" +
-                "\n" +
-                "NO HAY TIEMPO PARA LA PAZ. NO HAY RESPIRO NI PERDÓN \n" +
-                "\n" +
+        System.out.println("EN EL CUADRAGÉSIMO PRIMER MILENIO, LA HUMANIDAD SE ENCUENTRA AL BORDE DE LA ANIQUILACION.\n" +
+                "EL IMPERIO DE LA HUMANIDAD SE EXTIENDE A LO LARGO DE LA GALAXIA Y ESTÁ BAJO LA AMENAZA DE ALIENÍGENAS HOSTILES\n" +
+                "EN SUS FRONTERAS Y TRAIDORES Y HEREJES EN SU INTERIOR.\n" +
+                "SE TRATA DE UNA ERA DE GUERRA CONSTANTE, UNA NUEVA ERA OSCURA \n" +
+                "EN LA CUAL LA ILUMINACION SE VE SUSTITUIDA\n" +
+                "POR LAS SUPERSTICIONES, LA RETÓRICA Y LOS REZOS CIEGOS.\n" +
+                "VIVIR EN ESTOS TIEMPOS SUPONE SER UNO ENTRE INCONTABLES MILES DE BILLONES \n" +
+                "QUE EXISTEN EN EL RÉGIMEN MÁS CRUEL Y SANGUINARIO JAMÁS IMAGINABLE\n" +
+                "LOS MÁS PODEROSOS Y TEMIBLES DEFENSORES DEL IMPERIO SON LOS MARINES ESPACIALES: \n" +
+                "GUERREROS SOBREHUMANOS CREADOS MEDIANTE BIOINGENIERIA\n" +
+                "SON EL ÚLTIMO BASTIÓN DE LA HUMANIDAD ANTE EL HORROR.\n" +
                 "EN LA SOMBRÍA OSCURIDAD DEL FUTURO LEJANO, SÓLO HAY GUERRA ");
         System.out.println("Deseas crear los personajes con sus facciones, clases y atributos(TRUE) o prefiere utilizar personajes ya creados(FALSE): ");
         crearPj=sc.nextBoolean();
         if (crearPj==true) {
             //Realizo un do while para comprobar que la suma de los atributos no supere 500
             do {
-                System.out.println("CAPITULOS DE LOS MARINES ESPACIALES: "+"\n1.Lobos Espaciales(VI LEGION)"+"\n2.Angeles Sangrientos(IX LEGION)"+"\n3.Ultramarines(XIII LEGION)");
+                System.out.println("CAPITULOS DE LOS MARINES ESPACIALES: "+"\n1.Lobos Espaciales(VI LEGION)"+"\n2.Angeles Sangrientos(IX LEGION) "+"\n3.Ultramarines(XIII LEGION)");
                 opcionFaccion1=sc.nextInt();
                 switch (opcionFaccion1){
                     case 1:
@@ -213,21 +216,76 @@ public class Main {
                     ataqueBase2 < 1 || ataqueBase2 > 200 || defensaBase2 < 1 || defensaBase2 > 200 ||
                     regenerar < 1 || regenerar > 200 || regenerar2 < 1 || regenerar2 > 200));
         }else {
+            //PLANTILLA DEFINIDA PARA LOS JUGADORES(REALIZAR PRUEBAS)
+            //Plantilla de jugador 1, para realizar pruebas
+            System.out.println("IMPERIO DE LA HUMANIDAD:");
+            System.out.println("1.LOBO ESPACIAL -> CLASE: ESTRATEGA"+"\n2.ANGEL SANGRIENTO -> CLASE: ASALTO"+"\n3.ULTRAMARINE -> CLASE: VANGUARDIA");
+            System.out.println("Selecciona un marine espacial: ");
+            opcionJug1=sc.nextInt();
+            switch (opcionJug1){
+                case 1:
+                    faccion1="LOBO ESPACIAL";
+                    clase1="ESTRATEGA";
+                    velocidad=150;
+                    vida=100;
+                    defensaBase=100;
+                    ataqueBase=100;
+                    regenerar=50;
+                    break;
+                case 2:
+                    faccion1="ANGEL SANGRIENTO";
+                    clase1="ASALTO";
+                    velocidad=100;
+                    vida=100;
+                    defensaBase=150;
+                    ataqueBase=50;
+                    regenerar=50;
+                    break;
+                case 3:
+                    faccion1="ULTRAMARINE";
+                    clase1="VANGUARDIA";
+                    velocidad=150;
+                    vida=100;
+                    defensaBase=120;
+                    ataqueBase=50;
+                    regenerar=50;
+                    break;
 
-        //PLANTILLA DEFINIDA PARA LOS JUGADORES(REALIZAR PRUEBAS)
-        //Plantilla de jugador 1, para realizar pruebas
-        velocidad=150;
-        vida=100;
-        defensaBase=100;
-        ataqueBase=100;
-        regenerar=50;
+            }
 
-        //Plantilla del jugador2 para relizar pruebas
-        velocidad2=100;
-        vida2=100;
-        defensaBase2=150;
-        ataqueBase2=50;
-        regenerar2=50;
+            System.out.println("HEREJES DEL CAOS");
+            System.out.println("1.MIL HIJOS -> CLASE: BASTION "+"\n2.LEGION NEGRA -> CLASE: FRANCOTIRADOR"+"\n3.LEGION ALFA -> CLASE:PESADO");
+            System.out.println("Selecione un hereje del caos: ");
+            opcionJug2=sc.nextInt();
+            switch (opcionJug2){
+                case 1:
+                    faccion2="MIL HIJOS";
+                    clase2="BASTION";
+                    velocidad2=100;
+                    vida2=100;
+                    defensaBase2=100;
+                    ataqueBase2=150;
+                    regenerar2=50;
+                    break;
+                case 2:
+                    faccion2="LEGION NEGRA";
+                    clase2="FRANCOTIRADOR";
+                    velocidad2=200;
+                    vida2=100;
+                    defensaBase2=100;
+                    ataqueBase2=50;
+                    regenerar2=50;
+                    break;
+                case 3:
+                    faccion2="LEGION ALFA";
+                    clase2="PESADO";
+                    velocidad2=50;
+                    vida2=50;
+                    defensaBase2=300;
+                    ataqueBase2=50;
+                    regenerar2=50;
+                    break;
+            }
 
         }
 
@@ -280,13 +338,13 @@ public class Main {
 
             System.out.println("\n**********************************************");
             System.out.println("RONDA " + rondas);
-            System.out.println("Jugador 1: " + vida + " " + barra);
-            System.out.println("Jugador 2: " + vida2 + " " + barra2);
+            System.out.println(faccion1 +"CLASE: "+clase1+ " " + vida + " " + barra);
+            System.out.println(faccion2 +"CLASE: "+clase2+ " " + vida2 + " " + barra2);
 
 
             //determinar quien ataca primero PD: SE PUEDE REDUCIR CON UN METODO INT
             if (velocidad >= velocidad2) {
-                System.out.println("Jugador 1.Introduce un caracter A(Atacar), C(Curar) y cualquier caracter diferente pierde la ronda para continuar: ");
+                System.out.println(faccion1+" .Introduce un caracter A(Atacar), C(Curar) y cualquier caracter diferente pierde la ronda para continuar: ");
                 accion1=sc.next().toUpperCase().charAt(0);
                 //Ataque jugador 1 a jugador 2
                 switch (accion1){
@@ -300,7 +358,7 @@ public class Main {
                         if (vida2<=0){
                             vida2=0;
                         }
-                        System.out.println("Jugador 1 golpea primero con "+hit+" de daño");
+                        System.out.println(faccion1+" golpea primero con "+hit+" de daño");
                         //Ataque jugador 2 a jugador 1
                         if (vida2>0){
                             hitBase2=ataqueBase2-defensaBase/2;
@@ -312,7 +370,7 @@ public class Main {
                             if (vida<0){
                                 vida=0;
                             }
-                            System.out.println("Jugador 2 golpea primero con "+hit2+" de daño");
+                            System.out.println(faccion2+" golpea primero con "+hit2+" de daño");
                         }
                         break;
                     case 'C':
@@ -326,7 +384,7 @@ public class Main {
                 }
 
             } else {
-                System.out.println("Jugador 2.Introduce un caracter A(Atacar), C(Curar) y cualquier caracter diferente pierde la ronda para continuar: ");
+                System.out.println(faccion2+".Introduce un caracter A(Atacar), C(Curar) y cualquier caracter diferente pierde la ronda para continuar: ");
                 accion2=sc.next().toUpperCase().charAt(0);
                 switch (accion2){
                     case 'A':
@@ -340,7 +398,7 @@ public class Main {
                         if (vida<0){
                             vida=0;
                         }
-                        System.out.println("Jugador 2 golpea primero con "+hit2+" de daño");
+                        System.out.println(faccion2+" golpea primero con "+hit2+" de daño");
                         //Ataque del primer jugador al segundo
                         if (vida>1){
                             hitBase=ataqueBase-defensaBase2/2;
@@ -352,7 +410,7 @@ public class Main {
                             if (vida2<0){
                                 vida2=0;
                             }
-                            System.out.println("Jugador 1 golpea primero con "+hit+" de daño");
+                            System.out.println(faccion1+" golpea primero con "+hit+" de daño");
                         }
                         break;
                     case 'C':
