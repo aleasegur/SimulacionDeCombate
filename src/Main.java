@@ -338,10 +338,10 @@ public class Main {
             StringBuilder barra2 = new StringBuilder();
             //Bucle para reccorer la vida del jugador y mostrar la vida de manera grafica
             for (int i = 0; i < barras; i++) {
-                barra.append("-");
+                barra.append("\uD83D\uDDA4");
             }
             for (int i = 0; i < barras2; i++) {
-                barra2.append("-");
+                barra2.append("\uD83D\uDDA4");
             }
 
             System.out.println("\n**********************************************");
